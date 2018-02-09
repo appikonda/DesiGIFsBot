@@ -10,6 +10,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class JsonParser {
 	}
 
 	public List<String> getItAll(String searchTag) throws JSONException, IOException {
+		int noOfGifs ;
 		JSONObject json = readJsonFromUrl(filePath);
 		System.out.println(json.toString());
 
@@ -50,12 +53,23 @@ public class JsonParser {
 		while (iter.hasNext()) {
 
 			JSONObject innerObject = (JSONObject) iter.next();
-			String name = (String) innerObject.get("name");
+			String name = ((String) innerObject.get("name")).toLowerCase();
 			System.out.println("name : " + name);
-			if (searchTag.contains(name)) {
+			Pattern pattern =Pattern.compile(searchTag);
+			Matcher matcher = pattern.matcher(name);
+			if (name.contains((searchTag).toLowerCase())) {
+			//if(pattern.matcher(name).matches()) {
 				JSONArray contentArray = (JSONArray) innerObject.get("content");
-
-				for (int i = 0; i < contentArray.length(); i++) {
+				System.out.println("CONTENTTTTTTTTTTTTTTTTTT LENGTH :" + contentArray.length());
+				if (contentArray.length() > 5)
+				{
+				   noOfGifs = 5;
+				}
+				else
+				{
+					noOfGifs=contentArray.length();
+				}
+				for (int i = 0; i < noOfGifs ; i++) {
 					JSONObject gifContentObject = (JSONObject) contentArray.get(i);
 					String gifNumString = (String) gifContentObject.get("gifNum");
 					int gifNum = Integer.parseInt(gifNumString);
