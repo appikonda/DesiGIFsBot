@@ -39,6 +39,8 @@ public class JsonParser {
 		}
 	}
 
+	
+	// get all the gifs
 	public List<String> getItAll(String searchTag) throws JSONException, IOException {
 		JSONObject json = readJsonFromUrl(filePath);
 		System.out.println(json.toString());
