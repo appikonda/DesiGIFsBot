@@ -41,6 +41,8 @@ public class JsonParser {
 		}
 	}
 
+	
+	// get all the gifs
 	public List<String> getItAll(String searchTag) throws JSONException, IOException {
 		int noOfGifs ;
 		JSONObject json = readJsonFromUrl(filePath);
